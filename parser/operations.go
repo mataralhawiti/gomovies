@@ -1,6 +1,8 @@
 package parser
 
-import "strconv"
+import (
+	"strconv"
+)
 
 func GetMoiveNames(movieObj *[]Movie) []string {
 	var names []string
@@ -37,4 +39,15 @@ func GetMoviesCountByRating(rating int, movieObj *[]Movie) int {
 // MoviesCount
 func GetMoviesCount(movieObj *[]Movie) int {
 	return len(*movieObj)
+}
+
+// GetMoviesRatingStats returns numbers of movies per rating
+// rating range 1 to 10
+func GetMoviesRatingStats(movieObj *[]Movie) map[string]int16 {
+	moviesStats := make(map[string]int16)
+
+	for _, movie := range *movieObj {
+		moviesStats[movie.RATING] = moviesStats[movie.RATING] + 1
+	}
+	return moviesStats
 }
