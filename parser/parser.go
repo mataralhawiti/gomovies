@@ -9,6 +9,7 @@ import (
 )
 
 type Movie struct {
+	MOVIE_ID  string
 	MOVIE_URL string
 	Name      string
 	YEAR      string

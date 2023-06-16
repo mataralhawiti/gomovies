@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"fmt"
+	"sort"
 	"strconv"
 )
 
@@ -53,8 +55,23 @@ func GetMoviesRatingStats(movieObj *[]Movie) map[string]int16 {
 }
 
 
-func GetTop10Movies() map[string]int16{
+func GetTop10Movies(movieObj *[]Movie) map[string]int16{
 	top10Movies := make(map[string]int16)
+	
+	moviebycnt := GetMoviesRatingStats(movieObj)
+	
+	keys := make([]string, len(moviebycnt))
+	for k := range moviebycnt {
+		keys = append(keys, k)
+	}
+	//sort.Strings(keys)
+	sort.Sort(sort.Reverse(sort.StringSlice(keys)))
+	fmt.Println(keys)
+	
+	
+	for i := 1; i <= len(*movieObj); i++ {
+
+	}
 
 	return top10Movies
 }

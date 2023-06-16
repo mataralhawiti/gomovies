@@ -19,4 +19,7 @@ func DisplayInfo(moviesList *[]parser.Movie) {
 	for k,v := range moviesRatingStats {
 		fmt.Printf("For rating %v ---> you have %v movie\n",k,v)
 	}
+
+	top10Movies := parser.GetTop10Movies(moviesList)
+	fmt.Println(len(top10Movies))
 }
