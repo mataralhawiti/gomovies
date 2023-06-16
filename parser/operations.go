@@ -25,15 +25,15 @@ func GetMoviesByRating(rating int, movieObj *[]Movie) []string {
 }
 
 // GetMovieByRating retrun count of moives with the given rating
-func GetMoviesCountByRating(rating int, movieObj *[]Movie) int {
-	sumMoive := 0
+func GetMoviesCountByRating(rating int, movieObj *[]Movie) (int, int) {
+	cntMoivesByRating := 0
 
 	for _, movie := range *movieObj {
 		if movie.RATING == strconv.Itoa(rating) {
-			sumMoive = sumMoive + 1
+			cntMoivesByRating = cntMoivesByRating + 1
 		}
 	}
-	return sumMoive
+	return cntMoivesByRating, rating
 }
 
 // MoviesCount
@@ -50,4 +50,11 @@ func GetMoviesRatingStats(movieObj *[]Movie) map[string]int16 {
 		moviesStats[movie.RATING] = moviesStats[movie.RATING] + 1
 	}
 	return moviesStats
+}
+
+
+func GetTop10Movies() map[string]int16{
+	top10Movies := make(map[string]int16)
+
+	return top10Movies
 }
