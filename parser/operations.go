@@ -54,24 +54,46 @@ func GetMoviesRatingStats(movieObj *[]Movie) map[string]int16 {
 	return moviesStats
 }
 
+func GetTop10Movies(movieObj *[]Movie) []string {
+	/**
+	1. detemine highest rating we have e.g. 10, 9, 8 etc
+	2. get a list of movies with rating from step 1
+	3. if list from step 2 is => 10, then get first 10 randomly and stop
+	4. if not, detemine the reminaing number out of 10 and move to next highest rating.
+	**/
+	top10Movies := make([]string, 10)
 
-func GetTop10Movies(movieObj *[]Movie) map[string]int16{
-	top10Movies := make(map[string]int16)
-	
 	moviebycnt := GetMoviesRatingStats(movieObj)
-	
-	keys := make([]string, len(moviebycnt))
+
+	//fmt.Print(moviebycnt)
+
+	keys := make([]string, 0, len(moviebycnt))
 	for k := range moviebycnt {
 		keys = append(keys, k)
 	}
 	//sort.Strings(keys)
 	sort.Sort(sort.Reverse(sort.StringSlice(keys)))
-	fmt.Println(keys)
-	
-	
-	for i := 1; i <= len(*movieObj); i++ {
+
+	for _, r := range keys {
+		intVar, _ := strconv.Atoi(r)
+		fmt.Println(intVar)
+		temp_slice := GetMoviesByRating(intVar, movieObj)
+
+		if len(top10Movies) < 11 {
+			top10Movies = append(top10Movies, temp_slice...)
+		} else {
+			break
+		}
 
 	}
+
+	//fmt.Println(len(keys))
+	// for _, r := range keys {
+	// 	fmt.Println(r)
+	// }
+
+	// for i := 1; i <= len(*movieObj); i++ {
+	// }
 
 	return top10Movies
 }

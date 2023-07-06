@@ -23,7 +23,7 @@ func ParseJSON(filePath string) *[]Movie {
 		log.Fatal(err)
 	}
 
-	log.Println("Successfully Opened users.json")
+	log.Printf("Successfully Opened %v", filePath)
 	// defer the closing of our jsonFile so that we can parse it later on
 	defer jsonFile.Close()
 
