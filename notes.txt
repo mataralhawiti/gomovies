@@ -1,3 +1,24 @@
 https://www.udemy.com/course/go-the-complete-developers-guide/
 https://www.infoq.com/articles/build-a-container-golang/
 https://www.golang-book.com/books/intro/9
+
+cat .\async_movies_full.json | jq -c ".[]" > movies_full.json
+
+/**
+go run .\main.go "async_movies_full.json"
+
+You've rated (385) movie, Great job!.
+
+We have (175) movie out of (385) with rating (7).
+
+Movies count per rating as follow :
+For rating 7 ---> you have 175 movie
+For rating 5 ---> you have 23 movie
+For rating 6 ---> you have 99 movie
+For rating 3 ---> you have 1 movie
+For rating 4 ---> you have 3 movie
+For rating 8 ---> you have 81 movie
+For rating 9 ---> you have 3 movie
+[9 8 7 6 5 4 3       ]
+0
+**/

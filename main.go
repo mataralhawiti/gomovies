@@ -14,7 +14,6 @@ func main() {
 	// New imple
 	internal.DisplayInfo(myMovies)
 
-
 	// bigquery
 	// projectID := "xxxxxxxxx"
 	// c := bigquery.CreateBqClient(projectID)
