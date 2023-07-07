@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"fmt"
 	"sort"
 	"strconv"
 )
@@ -61,11 +60,9 @@ func GetTop10Movies(movieObj *[]Movie) []string {
 	3. if list from step 2 is => 10, then get first 10 randomly and stop
 	4. if not, detemine the reminaing number out of 10 and move to next highest rating.
 	**/
-	top10Movies := make([]string, 10)
+	top10Movies := make([]string,0,10)
 
 	moviebycnt := GetMoviesRatingStats(movieObj)
-
-	//fmt.Print(moviebycnt)
 
 	keys := make([]string, 0, len(moviebycnt))
 	for k := range moviebycnt {
@@ -76,24 +73,15 @@ func GetTop10Movies(movieObj *[]Movie) []string {
 
 	for _, r := range keys {
 		intVar, _ := strconv.Atoi(r)
-		fmt.Println(intVar)
-		temp_slice := GetMoviesByRating(intVar, movieObj)
+		tempSlice := GetMoviesByRating(intVar, movieObj)
 
-		if len(top10Movies) < 11 {
-			top10Movies = append(top10Movies, temp_slice...)
+		if len(top10Movies) < 10 {
+			top10Movies = append(top10Movies, tempSlice...)
 		} else {
 			break
 		}
 
 	}
 
-	//fmt.Println(len(keys))
-	// for _, r := range keys {
-	// 	fmt.Println(r)
-	// }
-
-	// for i := 1; i <= len(*movieObj); i++ {
-	// }
-
-	return top10Movies
+	return top10Movies[:10]
 }
