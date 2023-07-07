@@ -50,7 +50,20 @@ func GetMoviesRatingStats(movieObj *[]Movie) map[string]int16 {
 	for _, movie := range *movieObj {
 		moviesStats[movie.RATING] = moviesStats[movie.RATING] + 1
 	}
-	return moviesStats
+
+	// sort map by desc before returning it
+	keys := make([]string, 0, len(moviesStats))
+	for k := range moviesStats {
+		keys = append(keys, k)
+	}
+	sort.Sort(sort.Reverse(sort.StringSlice(keys)))
+
+	sortedMoviesStats := make(map[string]int16)
+	for _, k := range keys {
+		sortedMoviesStats[k] = moviesStats[k]
+	}
+
+	return sortedMoviesStats
 }
 
 func GetTop10Movies(movieObj *[]Movie) []string {
