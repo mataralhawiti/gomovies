@@ -51,19 +51,7 @@ func GetMoviesRatingStats(movieObj *[]Movie) map[string]int16 {
 		moviesStats[movie.RATING] = moviesStats[movie.RATING] + 1
 	}
 
-	// sort map by desc before returning it
-	keys := make([]string, 0, len(moviesStats))
-	for k := range moviesStats {
-		keys = append(keys, k)
-	}
-	sort.Sort(sort.Reverse(sort.StringSlice(keys)))
-
-	sortedMoviesStats := make(map[string]int16)
-	for _, k := range keys {
-		sortedMoviesStats[k] = moviesStats[k]
-	}
-
-	return sortedMoviesStats
+	return moviesStats
 }
 
 func GetTop10Movies(movieObj *[]Movie) []string {
@@ -73,7 +61,7 @@ func GetTop10Movies(movieObj *[]Movie) []string {
 	3. if list from step 2 is => 10, then get first 10 randomly and stop
 	4. if not, detemine the reminaing number out of 10 and move to next highest rating.
 	**/
-	top10Movies := make([]string,0,10)
+	top10Movies := make([]string, 0, 10)
 
 	moviebycnt := GetMoviesRatingStats(movieObj)
 
