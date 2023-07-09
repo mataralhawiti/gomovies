@@ -15,7 +15,7 @@ func main() {
 	}
 	myMovies := parser.ParseJSON(args[0])
 
-	// New imple
+	// New imple - display stats about your movies list
 	internal.DisplayInfo(myMovies)
 
 	// bigquery
@@ -25,7 +25,15 @@ func main() {
 	//2023/06/13 14:59:34 bigquery.NewClient: bigquery: constructing client: google: could not find default credentials.
 	//See https://cloud.google.com/docs/authentication/external/set-up-adc for more information
 
+	// create bq dataset if not exists
+	// CreateBQdS := bigquery.CreateBQdS()
+
+	// create bq table if not exists
+	// CreateBQTbl := bigquery.CreateBQTbl()
+
+	// insert into bq table
 	// InsertBQ := bigquery.InsertIntoBq()
+
+	// query bq table
 	// ReadBG := bigquery.ReadFromBq()
-	// print(InsertBQ, ReadBG)
 }
