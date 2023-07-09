@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/mataralhawiti/gomovies/internal" // the directory Not the file!
@@ -9,6 +10,9 @@ import (
 
 func main() {
 	args := os.Args[1:]
+	if len(args) != 1 {
+		log.Fatal("Only pass one arg, your movies JSON file path")
+	}
 	myMovies := parser.ParseJSON(args[0])
 
 	// New imple

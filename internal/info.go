@@ -14,8 +14,8 @@ func DisplayInfo(moviesList *[]parser.Movie) {
 	fmt.Printf("\nYou've rated (%v) movie, Great job!.\n", moviesCount)
 
 	// movies with given rating
-	moviesCountByRating, userInputR := parser.GetMoviesCountByRating(7, moviesList)
-	fmt.Printf("\nWe have (%v) movie out of (%v) with rating (%v).\n", moviesCountByRating, moviesCount, userInputR)
+	// moviesCountByRating, userInputR := parser.GetMoviesCountByRating(7, moviesList)
+	// fmt.Printf("\nWe have (%v) movie out of (%v) with rating (%v).\n", moviesCountByRating, moviesCount, userInputR)
 
 	// movies per rating, in descending order
 	moviesRatingStats := parser.GetMoviesRatingStats(moviesList)
@@ -33,5 +33,8 @@ func DisplayInfo(moviesList *[]parser.Movie) {
 
 	// top 10 movies from the list by rating
 	top10Movies := parser.GetTop10Movies(moviesList)
-	fmt.Println(top10Movies)
+	fmt.Println("\nYour top 10 moives are :")
+	for i, m := range top10Movies {
+		fmt.Printf("%v. %v\n", i+1, m)
+	}
 }
