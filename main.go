@@ -34,7 +34,7 @@ func main() {
 	//bigquery.CreateTable(dataSet, table, c)
 
 	// insert into bq table
-	//bigquery.InsertIntoBq(dataSet, table, c, *myMovies)
+	bigquery.InsertIntoBq(dataSet, table, c, *myMovies)
 
 	// query bq table
 	// ReadBG := bigquery.ReadFromBq()
