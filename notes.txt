@@ -22,3 +22,7 @@ For rating 9 ---> you have 3 movie
 [9 8 7 6 5 4 3       ]
 0
 **/
+
+
+GCP :
+gcloud auth application-default login

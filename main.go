@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/mataralhawiti/gomovies/bigquery"
 	"github.com/mataralhawiti/gomovies/internal" // the directory Not the file!
 	"github.com/mataralhawiti/gomovies/parser"   // the directory Not the file!
 )
@@ -19,20 +20,21 @@ func main() {
 	internal.DisplayInfo(myMovies)
 
 	// bigquery
-	// projectID := "xxxxxxxxx"
-	// c := bigquery.CreateBqClient(projectID)
-	// fmt.Println(c)
+	projectID := "golang-389808"
+	dataSet := "dummyds"
+	table := "dumtable"
+	c := bigquery.CreateBqClient(projectID)
 	//2023/06/13 14:59:34 bigquery.NewClient: bigquery: constructing client: google: could not find default credentials.
 	//See https://cloud.google.com/docs/authentication/external/set-up-adc for more information
 
 	// create bq dataset if not exists
-	// CreateBQdS := bigquery.CreateBQdS()
+	//bigquery.CreateDataSet(dataSet, c)
 
 	// create bq table if not exists
-	// CreateBQTbl := bigquery.CreateBQTbl()
+	//bigquery.CreateTable(dataSet, table, c)
 
 	// insert into bq table
-	// InsertBQ := bigquery.InsertIntoBq()
+	//bigquery.InsertIntoBq(dataSet, table, c, *myMovies)
 
 	// query bq table
 	// ReadBG := bigquery.ReadFromBq()
