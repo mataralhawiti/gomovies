@@ -14,6 +14,12 @@ import (
 	bq "cloud.google.com/go/bigquery"
 )
 
+// var (
+// 	// Flags
+// 	filePath  = flag.String("fp", ".", "movies JSON file path")
+// 	enableGCP = flag.Bool("gcp", false, "If run GCP services part or not. Default: False")
+// )
+
 func main() {
 	args := os.Args[1:]
 	if len(args) != 1 {
