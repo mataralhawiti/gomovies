@@ -26,3 +26,6 @@ For rating 9 ---> you have 3 movie
 
 GCP :
 gcloud auth application-default login
+
+# run py from golang
+https://gist.github.com/olegpolukhin/3a4379a400c2c928f2d23059a78f1b82

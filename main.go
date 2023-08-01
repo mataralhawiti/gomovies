@@ -1,78 +1,44 @@
 package main
 
+/***
+go run .\main.go -fp ".\async_movies_full.json"
+or
+go run .\main.go -fp ".\async_movies_full.json" -st=false
+or
+go run .\main.go -mod 1 -py "C:/x/x/x/x/Programs/Python/Python310/python.exe"
+***/
+
 import (
-	"context"
-	"fmt"
-	"log"
+	"flag"
 	"os"
 
-	"github.com/mataralhawiti/gomovies/bigquery"
 	"github.com/mataralhawiti/gomovies/internal" // the directory Not the file!
 	"github.com/mataralhawiti/gomovies/parser"   // the directory Not the file!
-	"google.golang.org/api/iterator"
-
-	bq "cloud.google.com/go/bigquery"
 )
 
-// var (
-// 	// Flags
-// 	filePath  = flag.String("fp", ".", "movies JSON file path")
-// 	enableGCP = flag.Bool("gcp", false, "If run GCP services part or not. Default: False")
-// )
+var (
+	// Flags
+	runMod        = flag.Int("mod", 0, "0 to display stats about your provided movies json or 1 to run python scrtip to generate movies json file. Default: 0")
+	filePath      = flag.String("fp", ".", "movies JSON file path")
+	displayStats  = flag.Bool("st", true, "Display stats about my movies. Default: true")
+	PythonBinPath = flag.String("py", "python", "Your local machine python bin path. Default python")
+)
 
 func main() {
-	args := os.Args[1:]
-	if len(args) != 1 {
-		log.Fatal("Only pass one arg, your movies JSON file path")
+	// parse all flags
+	flag.Parse()
+
+	if *runMod == 1 {
+		// exect python script
+		parser.RunPyScript(*PythonBinPath)
+		os.Exit(0)
 	}
-	myMovies := parser.ParseJSON(args[0])
+
+	// parse movies json file
+	myMovies := parser.ParseJSON(*filePath)
 
 	// New imple - display stats about your movies list
-	internal.DisplayInfo(myMovies)
-
-	// bigquery
-	projectID := "golang-389808"
-	// dataSet := "dummyds"
-	// table := "dumtable"
-	c := bigquery.CreateBqClient(projectID)
-	//2023/06/13 14:59:34 bigquery.NewClient: bigquery: constructing client: google: could not find default credentials.
-	//See https://cloud.google.com/docs/authentication/external/set-up-adc for more information
-
-	// create bq dataset if not exists
-	//bigquery.CreateDataSet(dataSet, c)
-
-	// create bq table if not exists
-	//bigquery.CreateTable(dataSet, table, c)
-
-	// insert into bq table
-	// bigquery.InsertIntoBq(dataSet, table, c, *myMovies)
-
-	// query bq table
-	//sqlText := "SELECT movie_id, movie_url, name, year, rating, `desc` FROM dummyds.dumtable LIMIT 2"
-	//sqlText := "SELECT count(*) from dummyds.dumtable"
-	sqlText := "SELECT count(*) from dummyds.dumtable WHERE year = ?;"
-
-	q := c.Query(sqlText)
-	// params_positional
-	q.Parameters = []bq.QueryParameter{
-		{Value: "2012"},
-	}
-
-	ctx := context.Background()
-	it, err := q.Read(ctx)
-	if err != nil {
-		fmt.Println("Something is wrong")
-	}
-
-	for {
-		var values []bq.Value //interface
-		err := it.Next(&values)
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			fmt.Println("handle the error")
-		}
-		fmt.Println(values)
+	if *displayStats {
+		internal.DisplayInfo(myMovies)
 	}
 }
