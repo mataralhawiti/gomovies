@@ -29,3 +29,12 @@ gcloud auth application-default login
 
 # run py from golang
 https://gist.github.com/olegpolukhin/3a4379a400c2c928f2d23059a78f1b82
+
+# 
+/***
+go run .\main.go -fp ".\async_movies_full.json"
+or
+go run .\main.go -fp ".\async_movies_full.json" -st=false
+or
+go run .\main.go -mod 1 -py "C:/x/x/x/x/Programs/Python/Python310/python.exe"
+***/
