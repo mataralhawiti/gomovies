@@ -9,27 +9,31 @@ import (
 
 var (
 	// Flags
-	runMod        = flag.Int("mod", 0, "0 to display stats about your provided movies json or 1 to run python scrtip to generate movies json file. Default: 0")
-	filePath      = flag.String("fp", ".", "movies JSON file path")
-	displayStats  = flag.Bool("st", true, "Display stats about my movies. Default: true")
-	PythonBinPath = flag.String("py", "python", "Your local machine python bin path. Default python")
+	runMod int
+	filePath string
+	displayStats bool
+	PythonBinPath string
 )
 
 func main() {
+	flag.IntVar(&runMod, "mod", 0, "0 to display stats about your provided movies json or 1 to run python scrtip to generate movies json file. Default: 0")
+	flag.StringVar(&filePath, "fp", ".", "movies JSON file path")
+	flag.BoolVar(&displayStats, "st", true, "Display stats about my movies. Default: true")
+	flag.StringVar(&PythonBinPath, "py", "python", "Your local machine python bin path. Default python")
 	// parse all flags
 	flag.Parse()
 
-	if *runMod == 1 {
+	if runMod == 1 {
 		// exect python script
-		parser.RunPyScript(*PythonBinPath)
+		parser.RunPyScript(PythonBinPath)
 		return
 	}
 
 	// parse movies json file
-	myMovies := parser.ParseJSON(*filePath)
+	myMovies := parser.ParseJSON(filePath)
 
 	// New imple - display stats about your movies list
-	if *displayStats {
+	if displayStats {
 		internal.DisplayInfo(myMovies)
 	}
 }
