@@ -93,8 +93,8 @@ class Helpers:
 
 class AsyncCrawler:
     def __init__(self, urls):
-        self.conn = aiohttp.TCPConnector(limit_per_host=100, limit=0, ttl_dns_cache=300)
-        self.PARALLEL_REQUESTS = 10
+        self.conn = aiohttp.TCPConnector(limit_per_host=5, limit=5, ttl_dns_cache=300)
+        self.PARALLEL_REQUESTS = 5
         self.urls = urls
     
     async def gather_with_concurrency(self):
@@ -111,6 +111,7 @@ class AsyncCrawler:
                     soup = Helpers(movie_html=binary_resp).soup()
                     movie = MovieParser(soup, url).movie_details()
                     results.append(movie)
+                    await asyncio.sleep(1)
         await asyncio.gather(*(get(url) for url in self.urls))
         await session.close()
         return results
@@ -181,40 +182,41 @@ class MovieParser:
 
 def main():
     # Pages
-    logger.info("getting pages to scrap ..")
+    logger.info("- getting pages to scrap ..")
     help_pages = Helpers(main_url=main_url, rating_list_url=rating_list_url)
     pages = help_pages.pages_to_scrape()
-    logger.info(f"we have {len(pages)} main pages to loop throug .. I'll sleep for 10 seconds")
-    sleep(10)
+    logger.info(f"- we have ({len(pages)}) main pages to loop throug .. I'll sleep for 60 seconds")
+    sleep(60)
 
     # get movies names and ids
-    logger.info("started building movines names and ids .. then sleep for 60 second")
+    logger.info("- started building movines names and ids .. then sleep for 60 second")
     movies_names = Helpers.get_ids_names(pages)
     sleep(60)
 
     # sample 
-    logger.info(f"we got {len(movies_names)},here is a sample output :")
+    logger.info(f"- we got ({len(movies_names)}),here is a sample output :")
     for key,value in movies_names.items():
         print(f"id: {key}, and movie name: {value}")
+        sleep(10)
         break
 
     # dump the result locally   
-    logger.info(f"Now wrtiting to JSON file")
+    logger.info(f"- Now wrtiting movies and ids to JSON file")
     movies_names_ids = os.path.abspath(os.path.realpath(os.path.join(os.path.dirname('resource'), 'resource/movies_names_ids.json')))
-    with open(movies_names_ids, "w") as f:
+    with open(movies_names_ids, "w+") as f:
         json.dump(movies_names, f)
 
     # Asynch
     urls = [f"{main_url}/title/{key}" for key in movies_names]
-    logger.info(f"Starting Async crawler")
-    Crawler = AsyncCrawler(urls)
+    logger.info(f"- Starting Async crawler for movies details")
+    crawler = AsyncCrawler(urls)
     loop = asyncio.get_event_loop()
-    results = loop.run_until_complete(Crawler.gather_with_concurrency())
-    Crawler.conn.close()
+    results = loop.run_until_complete(crawler.gather_with_concurrency())
+    crawler.conn.close()
 
-    logger.info("wrtiting to JSON file")
+    logger.info("wrtiting movies details to JSON file")
     async_movies_full = os.path.abspath(os.path.realpath(os.path.join(os.path.dirname('resource'), 'resource/async_movies_full.json')))
-    with open(async_movies_full, "w") as f:
+    with open(async_movies_full, "w+") as f:
         json.dump(results, f)
 
 if __name__ == "__main__":

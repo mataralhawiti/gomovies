@@ -14,22 +14,23 @@ const filePath = "async_movies_full.json"
 
 var (
 	// Flags
-	runMod        = flag.Int("mod", 0, "0 to display stats about your provided movies json or 1 to run python scrtip to generate movies json file. Default: 0")
-	PythonBinPath = flag.String("py", "python", "Your local machine python bin path. Default python")
+	runMod int
+	PythonBinPath string
 )
 
 func main() {
 	// parse all flags
+	flag.IntVar(&runMod, "mod", 0, "0 to display stats about your provided movies json or 1 to run python scrtip to generate movies json file. Default: 0")
+	flag.StringVar(&PythonBinPath, "py", "python", "Your local machine python bin path. Default python")
 	flag.Parse()
 
-	switch *runMod {
+	switch runMod {
 	case 0:
 		// parse movies json file & display stats about your movies list
 		myMovies := parser.ParseJSON(filePath)
 		internal.DisplayInfo(myMovies)
 	case 1:
-		parser.RunPyScript(*PythonBinPath)
-		return
+		parser.RunPyScript(PythonBinPath)
 	case 3:
 		doesFileExist(filePath)
 	default:
