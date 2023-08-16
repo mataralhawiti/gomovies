@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/mataralhawiti/gomovies/bigquery" // the directory Not the file!
 	"github.com/mataralhawiti/gomovies/internal" // the directory Not the file!
 	"github.com/mataralhawiti/gomovies/parser"   // the directory Not the file!
 )
@@ -14,7 +15,7 @@ const filePath = "async_movies_full.json"
 
 var (
 	// Flags
-	runMod int
+	runMod        int
 	PythonBinPath string
 )
 
@@ -33,6 +34,11 @@ func main() {
 		parser.RunPyScript(PythonBinPath)
 	case 3:
 		doesFileExist(filePath)
+	case 4:
+		// BigQuery
+		ql := bigquery.QueriesList()
+		fmt.Println(ql)
+
 	default:
 		log.Fatal("invalid runMod")
 	}
