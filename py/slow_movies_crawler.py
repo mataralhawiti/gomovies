@@ -122,13 +122,12 @@ class MovieParserV1:
         return year
     
     def _parse_certificate(self) -> string:
-        if self._parse_id == 'tt0094894':
-            print(self.item)
-            exit()
+        # if self._parse_id == 'tt0094894':
+        #     print(self.item)
+        #     exit()
         try:
             movie_certificate = self.item.find(class_='certificate').get_text().strip()
         except:
-            print(self.item.find(class_='certificate'))
             logger.warning(f"could not parse movie certificate for {self._parse_id} - setting defaul movie_certificate=NA")
             movie_certificate = 'NA'
         return movie_certificate
@@ -151,13 +150,13 @@ class MovieParserV1:
             genre_list = ['NA']
         return genre_list
     
-    def _parse_rating(self) -> string:
+    def _parse_rating(self) -> int:
         try:
             #print(self.item.find(class_='ipl-rating-widget'))
             rating = self.item.find('span', class_='ipl-rating-star__rating').get_text()
         except:
             logger.warning(f"could not parse rating for {self._parse_id} - setting defaul rating=NA")
-            rating = 'NA'
+            rating = 0
         return rating
     
     def _parse_desc(self) -> string:
@@ -168,13 +167,13 @@ class MovieParserV1:
             desc="NA"
         return desc
     
-    def _parse_vote(self) -> string:
+    def _parse_vote(self) -> int:
         try:
             vote = self.item.find('span', {'name':'nv'})['data-value'].strip()
         except:
             logger.warning(f"could not parse desc for {self._parse_id} - setting defaul vote=NA")
             vote="NA"
-        return str(vote)
+        return vote
     
     def _parse_people(self) -> string:
         try:
@@ -182,8 +181,8 @@ class MovieParserV1:
             print(people)
         except:
             logger.warning(f"could not parse desc for {self._parse_id} - setting defaul desc=No description")
-            people="1"
-        return str(people)
+            people="NA"
+        return people
 
     def _parse_poster(self) -> string:
         try:
