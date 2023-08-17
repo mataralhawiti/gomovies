@@ -37,7 +37,9 @@ func main() {
 	case 4:
 		// BigQuery
 		ql := bigquery.QueriesList()
-		fmt.Println(ql)
+		for _, k := range ql {
+			fmt.Printf("%+v", k)
+		}
 
 	default:
 		log.Fatal("invalid runMod")

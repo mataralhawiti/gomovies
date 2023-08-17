@@ -13,32 +13,22 @@ type Query struct {
 	sqlText string
 }
 
-// func (q *Query) QueriesList() []Query {
-// 	QSlice := []Query{}
-// 	ctn := 0
-
-// 	for k, v := range QList {
-// 		q.id = ctn
-// 		q.desc = k
-// 		q.sqlText = v
-
-// 		QSlice = append(QSlice, *q)
-// 	}
-
-// 	return QSlice
-// }
-
-func QueriesList() []Query {
+func QueriesList() []map[string]string{
 	var q Query
-	QSlice := []Query{}
+	//QMap := map[string]string{}
+	QSlice := []map[string]string{}
 	ctn := 0
 
 	for k, v := range QList {
-		q.id = ctn
-		q.desc = k
-		q.sqlText = v
+		// q.id = ctn
+		// q.desc = k
+		// q.sqlText = v
 
-		QSlice = append(QSlice, q)
+		QSlice = append(QSlice, map{"id":cnt, k:v})
+		// fmt.Printf("%+v\n", q)
+
+		//QMap[ctn] = q
+
 	}
 
 	return QSlice
