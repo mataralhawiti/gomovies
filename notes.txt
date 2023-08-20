@@ -38,3 +38,5 @@ go run .\main.go -fp ".\async_movies_full.json" -st=false
 or
 go run .\main.go -mod 1 -py "C:/x/x/x/x/Programs/Python/Python310/python.exe"
 ***/
+
+/home/matar/.config/gcloud/application_default_credentials.json
