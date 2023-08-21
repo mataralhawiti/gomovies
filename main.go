@@ -39,7 +39,11 @@ func main() {
 		// Read from BigQuery
 		sqltxt := userInput()
 
-		projectID := "golang-389808"
+		// projectID := "golang-389808"
+		projectID := os.Getenv("GCP_PROJECT")
+		if projectID == "" {
+			log.Fatal("- GCP_PROJECT environment variable must be set.\n# bash: export GCP_PROJECT=xxx\n# powershell: $env:GCP_PROJECT=xxx")
+		}
 		c := bigquery.CreateBqClient(projectID)
 		bigquery.ReadFromBq(sqltxt, c)
 	default:

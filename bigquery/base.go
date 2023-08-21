@@ -64,7 +64,7 @@ func ReadFromBq(sqlText string, bqClinet *bigquery.Client) error {
 	it, err := q.Read(ctx)
 
 	if err != nil {
-		log.Fatal("could not read from BigQuery")
+		log.Fatalf("could not read from BigQuery %v", err)
 	}
 
 	for {
