@@ -45,7 +45,12 @@ func main() {
 			log.Fatal("- GCP_PROJECT environment variable must be set.\n# bash: export GCP_PROJECT=xxx\n# powershell: $env:GCP_PROJECT=xxx")
 		}
 		c := bigquery.CreateBqClient(projectID)
-		bigquery.ReadFromBq(sqltxt, c)
+
+		// dry run - estimation
+		bigquery.ReadFromBqDryRun(sqltxt, c)
+
+		// execute query
+		// bigquery.ReadFromBq(sqltxt, c)
 	default:
 		log.Fatal("invalid runMod")
 	}

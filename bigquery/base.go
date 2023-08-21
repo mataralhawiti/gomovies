@@ -74,10 +74,32 @@ func ReadFromBq(sqlText string, bqClinet *bq.Client) error {
 			break
 		}
 		if err != nil {
-			log.Fatal("Iterator error")
+			log.Fatalf(" %v", err)
 		}
 		fmt.Println(values)
 	}
 
+	return nil
+}
+
+func ReadFromBqDryRun(sqlText string, bqClinet *bq.Client) error {
+	ctx := context.Background()
+
+	q := bqClinet.Query(sqlText)
+	q.DryRun = true
+
+	job, err := q.Run(ctx)
+	if err != nil {
+		log.Fatalf("could not read from BigQuery %v", err)
+	}
+
+	// Dry run is not asynchronous, so get the latest status and statistics.
+	status := job.LastStatus()
+	if err := status.Err(); err != nil {
+		return err
+	}
+
+	// fmt.Fprintf(w, "This query will process %d bytes\n", status.Statistics.TotalBytesProcessed)
+	fmt.Printf("This query will process %d bytes\n", status.Statistics.TotalBytesProcessed)
 	return nil
 }
