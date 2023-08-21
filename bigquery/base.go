@@ -7,6 +7,7 @@ import (
 
 	"cloud.google.com/go/bigquery"
 	"github.com/mataralhawiti/gomovies/parser" // the directory Not the file!
+	"google.golang.org/api/iterator"
 )
 
 const BigQuery string = "BigQuery"
@@ -56,6 +57,27 @@ func InsertIntoBq(datasetName string, tableName string, bqClinet *bigquery.Clien
 	return nil
 }
 
-func ReadFromBq() string {
-	return BigQuery
+func ReadFromBq(sqlText string, bqClinet *bigquery.Client) error {
+	q := bqClinet.Query(sqlText)
+
+	ctx := context.Background()
+	it, err := q.Read(ctx)
+
+	if err != nil {
+		log.Fatal("could not read from BigQuery")
+	}
+
+	for {
+		var values []bigquery.Value //Interface
+		err := it.Next(&values)
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			log.Fatal("Iterator error")
+		}
+		fmt.Println(values)
+	}
+
+	return nil
 }
