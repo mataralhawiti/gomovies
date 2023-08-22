@@ -5,7 +5,7 @@ import (
 )
 
 var QList = map[string]string{
-	"Movies count":                 "SELECT count(movie_id) FROM movies.movies_full;",
+	"Movies count":                 "SELECT count(movie_id) FROM {dataSet}.{table};",
 	"Movies count per year":        "SELECT count(*) FROM movies.movies_full WHERE year = ?;",
 	"Moives count grouped by year": "SELECT year, count(movie_id) as ctn FROM movies.movies_full GROUP BY year ORDER BY count(movie_id) DESC;",
 	"display a movie info":         "SELECT name, year, rating, `desc` FROM movies.movies_full LIMIT 1",
