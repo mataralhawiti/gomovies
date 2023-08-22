@@ -1,12 +1,14 @@
-FROM golang:1.19.2 as builder
-WORKDIR /app
-RUN go mod init hello-app
-COPY *.go ./
-RUN CGO_ENABLED=0 GOOS=linux go build -o /hello-app
+FROM golang:1.18 as build
 
-FROM gcr.io/distroless/base-debian11
-WORKDIR /
-COPY --from=builder /hello-app /hello-app
-ENV PORT 8080
-USER nonroot:nonroot
-CMD ["/hello-app"]
+WORKDIR /gomovies
+COPY . .
+
+RUN go mod download
+RUN go vet
+
+RUN CGO_ENABLED=0 go build -o /go/bin/gomovies
+
+FROM gcr.io/distroless/static-debian11
+
+COPY --from=build /go/bin/gomovies /
+CMD ["/gomovies"]

@@ -47,10 +47,10 @@ func main() {
 		c := bigquery.CreateBqClient(projectID)
 
 		// dry run - estimation
-		bigquery.ReadFromBqDryRun(sqltxt, c)
+		// bigquery.ReadFromBqDryRun(sqltxt, c)
 
 		// execute query
-		// bigquery.ReadFromBq(sqltxt, c)
+		bigquery.ReadFromBq(sqltxt, c)
 	default:
 		log.Fatal("invalid runMod")
 	}
