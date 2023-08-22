@@ -1,9 +1,7 @@
 package main
 
 import (
-	"errors"
 	"flag"
-	"fmt"
 	"log"
 	"os"
 
@@ -39,20 +37,18 @@ func main() {
 	case 1:
 		parser.RunPyScript(PythonBinPath)
 	case 3:
-		doesFileExist(filePath)
+		internal.DoesFileExist(filePath)
 	case 4:
 		// Read from BigQuery
-		sqltxt := userInput()
+		sqltxt := internal.UserInput()
 
 		if projectID == "" {
 			log.Fatal("- GCP_PROJECT environment variable must be set.\n# bash: export GCP_PROJECT=xxx\n# powershell: $env:GCP_PROJECT=xxx")
 		}
 		c := bigquery.CreateBqClient(projectID)
 
-		// dry run - estimation
 		// bigquery.ReadFromBqDryRun(sqltxt, c)
 
-		// execute query
 		bigquery.ReadFromBq(sqltxt, c)
 	case 5:
 		// create dataset & table
@@ -77,62 +73,4 @@ func main() {
 	default:
 		log.Fatal("invalid runMod")
 	}
-}
-
-// function to check if file exists
-func doesFileExist(fileName string) {
-	_, error := os.Stat(fileName)
-
-	// check if error is "file not exists"
-	if os.IsNotExist(error) {
-		fmt.Printf("%v file does not exist\n", fileName)
-	} else {
-		fmt.Printf("%v file exist\n", fileName)
-	}
-}
-
-// check if value in Slice - Go 1.20
-// For Go 1.21, we should use package:slices
-func contains(slic []string, v string) (bool, error) {
-	for _, s := range slic {
-		if s == v {
-			return true, nil
-		}
-	}
-	return false, errors.New("Invalid query number")
-}
-
-func userInput() string {
-	// BigQuery
-	ql := bigquery.QueriesList()
-	var ids []string
-
-	// get QueriesList ids
-	for _, k := range ql {
-		ids = append(ids, k["id"])
-	}
-
-	// Take user input
-	fmt.Println("Please enter query id .. ex: 2")
-	for _, items := range ql {
-		fmt.Printf("%v - %v\n", items["id"], items["desc"])
-	}
-
-	var qur string
-	fmt.Scan(&qur)
-
-	var sqltxt string
-
-	// check if user's input is valid
-	// if yes, extract SQL query text from predefined list
-	if ok, err := contains(ids, qur); ok {
-		for _, k := range ql {
-			if sqltxt = k["sqlText"]; k["id"] == qur {
-				return sqltxt
-			}
-		}
-	} else {
-		log.Fatal(err)
-	}
-	return sqltxt
 }
