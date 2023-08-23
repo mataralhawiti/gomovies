@@ -222,8 +222,8 @@ def main():
     movies_details = Helpers.get_ids_names(pages)
 
     logger.info("- wrtiting movies details to JSON file")
-    async_movies_full = os.path.abspath(os.path.realpath(os.path.join(os.path.dirname('resource'), 'resource/async_movies_full.json')))
-    with open(async_movies_full, "w+") as f:
+    sync_movies_full = os.path.abspath(os.path.realpath(os.path.join(os.path.dirname('resource'), 'resource/sync_movies_full.json')))
+    with open(sync_movies_full, "w+") as f:
         json.dump(movies_details, f, indent=4)
 
 if __name__ == "__main__":
