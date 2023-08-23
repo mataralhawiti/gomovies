@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 
@@ -40,16 +41,17 @@ func main() {
 		internal.DoesFileExist(filePath)
 	case 4:
 		// Read from BigQuery
-		sqltxt := internal.UserInput()
+		sqlTxt := internal.UserInput()
+		FmtSqlTxt := fmt.Sprintf(sqlTxt, dataSet, table)
 
 		if projectID == "" {
 			log.Fatal("- GCP_PROJECT environment variable must be set.\n# bash: export GCP_PROJECT=xxx\n# powershell: $env:GCP_PROJECT=xxx")
 		}
 		c := bigquery.CreateBqClient(projectID)
 
-		// bigquery.ReadFromBqDryRun(sqltxt, c)
+		// bigquery.ReadFromBqDryRun(FmtSqlTxt, c)
 
-		bigquery.ReadFromBq(sqltxt, c)
+		bigquery.ReadFromBq(FmtSqlTxt, c)
 	case 5:
 		// create dataset & table
 		if projectID == "" || dataSet == "" || table == "" {
@@ -68,6 +70,9 @@ func main() {
 
 		c := bigquery.CreateBqClient(projectID)
 		myMovies := parser.ParseJSON(filePath)
+		// TODO: find better way to handle if dataset or table not exist
+		//bigquery.CreateDataSet(dataSet, c)
+		//bigquery.CreateTable(dataSet, table, c)
 		bigquery.InsertIntoBq(dataSet, table, c, *myMovies)
 
 	default:

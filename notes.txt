@@ -40,3 +40,10 @@ go run .\main.go -mod 1 -py "C:/x/x/x/x/Programs/Python/Python310/python.exe"
 ***/
 
 /home/matar/.config/gcloud/application_default_credentials.json
+
+--
+
+export GCP_PROJECT=golang-389808
+export GCP_DATASET=gomovies
+export GCP_TABLE=movies
+
