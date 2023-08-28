@@ -1,8 +1,3 @@
-"""
-# pipreqs : to generate reqs.txt
-# why not to use pip freeze > requirements.txt ( the catch is envdev)
-https://www.idiotinside.com/2015/05/10/python-auto-generate-requirements-txt/
-"""
 # https://blog.jonlu.ca/posts/async-python-http
 # https://stackoverflow.com/questions/38252434/beautifulsoup-to-find-a-link-that-contains-a-specific-word
 # https://stackoverflow.com/questions/63494930/beautifulsoup-match-empty-class
@@ -19,7 +14,6 @@ from traceback import print_tb
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-import aiohttp
 import asyncio
 import platform
 if platform.system()=='Windows':
@@ -31,9 +25,6 @@ logger = logging.getLogger()
 
 main_url = 'https://www.imdb.com'
 rating_list_url = '/user/ur56605022/ratings'
-#'https://www.imdb.com/user/ur56605022/ratings?ref_=nv_usr_rt_4'
-#requests_cache.install_cache('imdb_cache', backend='sqlite', expire_after=1000)
-
 
 class Helpers:
     def __init__(self, **kwargs):
@@ -56,9 +47,6 @@ class Helpers:
         return soup
     
     def pages_to_scrape(self):
-        # if not all(elem in {'key1','key2'} for elem in self.args.keys()):
-        #     raise ValueError('No html object was passed')
-
         if self.args.get('main_url') is None or self.args.get('rating_list_url') is None:
             raise ValueError('Missing required params')
 
@@ -122,9 +110,6 @@ class MovieParserV1:
         return year
     
     def _parse_certificate(self) -> string:
-        # if self._parse_id == 'tt0094894':
-        #     print(self.item)
-        #     exit()
         try:
             movie_certificate = self.item.find(class_='certificate').get_text().strip()
         except:
@@ -152,7 +137,6 @@ class MovieParserV1:
     
     def _parse_rating(self) -> int:
         try:
-            #print(self.item.find(class_='ipl-rating-widget'))
             rating = self.item.find('span', class_='ipl-rating-star__rating').get_text()
         except:
             logger.warning(f"could not parse rating for {self._parse_id} - setting defaul rating=NA")
@@ -222,7 +206,7 @@ def main():
     movies_details = Helpers.get_ids_names(pages)
 
     logger.info("- wrtiting movies details to JSON file")
-    sync_movies_full = os.path.abspath(os.path.realpath(os.path.join(os.path.dirname('resource'), 'resource/sync_movies_full.json')))
+    sync_movies_full = 'sync_movies_full.json'
     with open(sync_movies_full, "w+") as f:
         json.dump(movies_details, f, indent=4)
 

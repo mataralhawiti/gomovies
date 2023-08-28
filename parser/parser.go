@@ -29,7 +29,7 @@ func ParseJSON(filePath string) *[]Movie {
 
 	byteValue, _ := io.ReadAll(jsonFile)
 
-	// we initialize our movies array
+	// we initialize our movies slice
 	var m []Movie
 
 	// Unmarshal our JSON file
