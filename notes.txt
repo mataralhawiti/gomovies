@@ -47,3 +47,18 @@ export GCP_PROJECT=golang-389808
 export GCP_DATASET=gomovies
 export GCP_TABLE=movies
 
+--
+Record !!
+Array (a.k.a. repeated field).
+Struct (a.k.a. nested field).
+
+Normlized -> Denmormalized -> Repeated 
+--
+convert JSON to new line delimited JSON (which is the format that BigQuery ingests)
+cat sync_movies_full.json | jq -c '.[]'
+cat sync_movies_full.json | jq -c '.[]' > sync_movies_full_BQFormatted.json
+
+--
+gcloud storage buckets list | grep gomovies
+gcloud storage cp sync_movies_full_BQFormatted.json gs://gomovies/
+--

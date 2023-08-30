@@ -30,21 +30,9 @@
         "mode": "NULLABLE"
     },
     {
-        "name": "addresses",
-        "type": "RECORD",
-        "mode": "REPEATED",
-        "fields": [
-            {
-                "name": "status",
-                "type": "STRING",
-                "mode": "NULLABLE"
-            },
-            {
-                "name": "address",
-                "type": "STRING",
-                "mode": "NULLABLE"
-            }
-        ]
+        "name": "genre",
+        "type": "STRING",
+        "mode": "REPEATED"
     },
     {
         "name": "rating",
