@@ -21,11 +21,11 @@ func DisplayInfo(moviesList *[]parser.Movie) {
 	moviesRatingStats := parser.GetMoviesRatingStats(moviesList)
 	fmt.Println("\nMovies count per rating as follow :")
 
-	keys := make([]string, 0, len(moviesRatingStats))
+	keys := make([]int, 0, len(moviesRatingStats))
 	for key := range moviesRatingStats {
 		keys = append(keys, key)
 	}
-	sort.Sort(sort.Reverse(sort.StringSlice(keys)))
+	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
 
 	for _, k := range keys {
 		fmt.Printf("For rating %v ---> you have %v movie\n", k, moviesRatingStats[k])

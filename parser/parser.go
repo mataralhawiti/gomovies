@@ -1,4 +1,3 @@
-// https://stackoverflow.com/questions/53538123/how-to-parse-json-array-struct
 package parser
 
 import (
@@ -9,39 +8,32 @@ import (
 )
 
 type Movie struct {
-	MOVIE_ID  string
-	MOVIE_URL string
-	Name      string
-	YEAR      string
-	RATING    string
-	DESC      string
+	MovieId   string
+	MovieUrl  string
+	MovieName string
+	Year      int
+	Cert      string
+	Runtime   string
+	Genre     []string
+	Rating    int
+	Desc      string
+	Vote      int
 }
 
 func ParseJSON(filePath string) *[]Movie {
 	jsonFile, err := os.Open(filePath)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 
-	log.Printf("Successfully Opened %v", filePath)
-	// defer the closing of our jsonFile so that we can parse it later on
+	log.Printf("Succffully opend file %v\n", jsonFile)
+
 	defer jsonFile.Close()
 
 	byteValue, _ := io.ReadAll(jsonFile)
-
-	// we initialize our movies slice
-	var m []Movie
-
+	var movies []Movie
 	// Unmarshal our JSON file
-	json.Unmarshal(byteValue, &m)
+	json.Unmarshal(byteValue, &movies)
 
-	// print all
-	//fmt.Println(m[0])
-
-	// print Names
-	// for _, data := range m {
-	// 	fmt.Println(data.Name)
-	// }
-
-	return &m
+	return &movies
 }
