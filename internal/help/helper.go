@@ -1,4 +1,4 @@
-package internal
+package help
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/mataralhawiti/gomovies/bigquery" // the directory Not the file!
+	"github.com/mataralhawiti/gomovies/internal/bigquery" // the directory Not the file!
 )
 
 // function to check if file exists

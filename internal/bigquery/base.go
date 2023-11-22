@@ -6,7 +6,7 @@ import (
 	"log"
 
 	bq "cloud.google.com/go/bigquery"
-	"github.com/mataralhawiti/gomovies/parser" // the directory Not the file!
+	"github.com/mataralhawiti/gomovies/internal/parser" // the directory Not the file!
 	"google.golang.org/api/iterator"
 )
 
