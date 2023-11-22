@@ -26,7 +26,7 @@ func ParseJSON(filePath string) *[]Movie {
 		log.Fatalln(err)
 	}
 
-	log.Printf("Succffully opend file %v\n", filePath)
+	//log.Printf("Succffully opend file %v\n", filePath)
 
 	defer jsonFile.Close()
 

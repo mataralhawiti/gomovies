@@ -7,11 +7,15 @@ import (
 	"github.com/mataralhawiti/gomovies/parser" // the directory Not the file!
 )
 
+// colors
+var Yellow = "\033[33m"
+var Reset = "\033[0m"
+
 // DisplayInfo displays stats about your movies rating list
 func DisplayInfo(moviesList *[]parser.Movie) {
 	// overall movies rating
 	moviesCount := parser.GetMoviesCount(moviesList)
-	fmt.Printf("\nYou've rated (%v) movie, Great job!.\n", moviesCount)
+	fmt.Printf("%v** You've rated (%v) movie, Great job!.%v\n", Yellow, moviesCount, Reset)
 
 	// movies with given rating
 	// moviesCountByRating, userInputR := parser.GetMoviesCountByRating(7, moviesList)
@@ -19,7 +23,7 @@ func DisplayInfo(moviesList *[]parser.Movie) {
 
 	// movies per rating, in descending order
 	moviesRatingStats := parser.GetMoviesRatingStats(moviesList)
-	fmt.Println("\nMovies count per rating as follow :")
+	fmt.Printf("%v** Movies count per rating as follow :%v\n", Yellow, Reset)
 
 	keys := make([]int, 0, len(moviesRatingStats))
 	for key := range moviesRatingStats {
@@ -28,13 +32,13 @@ func DisplayInfo(moviesList *[]parser.Movie) {
 	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
 
 	for _, k := range keys {
-		fmt.Printf("For rating %v ---> you have %v movie\n", k, moviesRatingStats[k])
+		fmt.Printf(" - rating (%v) -> %v movies\n", k, moviesRatingStats[k])
 	}
 
 	// top 10 movies from the list by rating
 	top10Movies := parser.GetTop10Movies(moviesList)
-	fmt.Println("\nYour top 10 moives are :")
+	fmt.Printf("%v** Your top 10 moives are :%v\n", Yellow, Reset)
 	for i, m := range top10Movies {
-		fmt.Printf("%v. %v\n", i+1, m)
+		fmt.Printf(" %v. %v\n", i+1, m)
 	}
 }
