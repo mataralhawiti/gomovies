@@ -6,11 +6,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const filePath = "resource/sync_movies_full.json"
-
+// var filePath = "resource/sync_movies_full.json"
+var filePath string
 var statsCmd = &cobra.Command{
 	Use:   "stats",
 	Short: "show movies stats",
+	// Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		myMovies := parser.ParseJSON(filePath)
 		info.DisplayInfo(myMovies)
@@ -18,5 +19,6 @@ var statsCmd = &cobra.Command{
 }
 
 func init() {
+	statsCmd.Flags().StringVarP(&filePath, "file_path", "f", "resource/sync_movies_full.json", "Path to movies JSON file")
 	rootCmd.AddCommand(statsCmd)
 }
