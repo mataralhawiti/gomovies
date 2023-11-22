@@ -11,7 +11,7 @@ import (
 	"github.com/mataralhawiti/gomovies/parser"   // the directory Not the file!
 )
 
-const filePath = "sync_movies_full.json"
+const filePath = "resource/sync_movies_full.json"
 
 var (
 	// Flags
