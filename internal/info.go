@@ -2,6 +2,7 @@ package internal
 
 import (
 	"fmt"
+	"runtime"
 	"sort"
 
 	"github.com/mataralhawiti/gomovies/parser" // the directory Not the file!
@@ -13,6 +14,12 @@ var Reset = "\033[0m"
 
 // DisplayInfo displays stats about your movies rating list
 func DisplayInfo(moviesList *[]parser.Movie) {
+	// ignore coloes if Windows
+	if runtime.GOOS == "windows" {
+		Yellow = ""
+		Reset = ""
+	}
+
 	// overall movies rating
 	moviesCount := parser.GetMoviesCount(moviesList)
 	fmt.Printf("%v** You've rated (%v) movie, Great job!.%v\n", Yellow, moviesCount, Reset)
