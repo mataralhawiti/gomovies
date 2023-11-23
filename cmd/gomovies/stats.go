@@ -19,7 +19,7 @@ var statsCmd = &cobra.Command{
 }
 
 func init() {
-	statsCmd.Flags().StringVarP(&filePath, "file_path", "f", "", "Path to movies JSON file")
+	statsCmd.Flags().StringVarP(&filePath, "file_path", "f", "", "Path to movies JSON file. ex: movies.json")
 	rootCmd.AddCommand(statsCmd)
 
 	statsCmd.MarkFlagRequired("file_path")

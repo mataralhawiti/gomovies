@@ -67,3 +67,6 @@ gcloud storage cp sync_movies_full_BQFormatted.json gs://gomovies/
 go run main.go stats -f "resource/sync_movies_full.json"
 
 go run main.go stats -f="movies.json"
+
+
+./gomovies
