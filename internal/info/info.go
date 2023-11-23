@@ -22,7 +22,7 @@ func DisplayInfo(moviesList *[]parser.Movie) {
 
 	// overall movies rating
 	moviesCount := parser.GetMoviesCount(moviesList)
-	fmt.Printf("%v** You've rated (%v) movie, Great job!.%v\n", Yellow, moviesCount, Reset)
+	fmt.Printf("%v** You've rated (%v) movie, Great job!.%v\n\n", Yellow, moviesCount, Reset)
 
 	// movies with given rating
 	// moviesCountByRating, userInputR := parser.GetMoviesCountByRating(7, moviesList)
@@ -38,14 +38,16 @@ func DisplayInfo(moviesList *[]parser.Movie) {
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
 
+	fmt.Printf("| rating | no of movies |\n")
+	fmt.Printf("| -------|------------- |\n")
 	for _, k := range keys {
-		fmt.Printf(" - rating (%v) -> %v movies\n", k, moviesRatingStats[k])
+		fmt.Printf("| %v      | %v\n", k, moviesRatingStats[k])
 	}
 
 	// top 10 movies from the list by rating
-	top10Movies := parser.GetTop10Movies(moviesList)
-	fmt.Printf("%v** Your top 10 moives are :%v\n", Yellow, Reset)
-	for i, m := range top10Movies {
-		fmt.Printf(" %v. %v\n", i+1, m)
-	}
+	// top10Movies := parser.GetTop10Movies(moviesList)
+	// fmt.Printf("%v** Your top 10 moives are :%v\n", Yellow, Reset)
+	// for i, m := range top10Movies {
+	// 	fmt.Printf(" %v. %v\n", i+1, m)
+	// }
 }

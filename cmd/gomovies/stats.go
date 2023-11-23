@@ -19,6 +19,8 @@ var statsCmd = &cobra.Command{
 }
 
 func init() {
-	statsCmd.Flags().StringVarP(&filePath, "file_path", "f", "resource/sync_movies_full.json", "Path to movies JSON file")
+	statsCmd.Flags().StringVarP(&filePath, "file_path", "f", "", "Path to movies JSON file")
 	rootCmd.AddCommand(statsCmd)
+
+	statsCmd.MarkFlagRequired("file_path")
 }
