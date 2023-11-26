@@ -5,11 +5,12 @@ import (
 )
 
 var QList = map[string]string{
-	"Movies count":                 "SELECT count(movie_id) FROM `%s.%s`",
-	"Movies count per year":        "SELECT count(*) FROM `%s.%s` WHERE year = \"2000\"",
-	"Moives count grouped by year": "SELECT year, count(movie_id) as ctn FROM `%s.%s` GROUP BY year ORDER BY count(movie_id) DESC",
-	"display a movie info":         "SELECT name, year, rating, `desc` FROM `%s.%s` LIMIT 1",
-	"the highest voting count":     "SELECT MAX(vote) FROM `%s.%s`",
+	"Movies count":                        "`SELECT count(movie_id) FROM `%s.%s``",
+	"Movies count per year":               "`SELECT count(*) FROM `%s.%s` WHERE year = \"2000\"`",
+	"Moives count grouped by year":        "`SELECT year, count(movie_id) as ctn FROM `%s.%s` GROUP BY year ORDER BY count(movie_id) DESC`",
+	"display a movie info":                "`SELECT name, year, rating, `desc` FROM `%s.%s` LIMIT 1`",
+	"the highest voting count":            "SELECT MAX(vote) FROM `%s.%s`",
+	"Movie with the highest voting count": "TBI",
 }
 
 type Query struct {
