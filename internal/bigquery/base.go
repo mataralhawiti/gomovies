@@ -59,7 +59,7 @@ func InsertIntoBq(datasetName string, tableName string, bqClinet *bq.Client, mvs
 
 func ReadFromBq(sqlText string, bqClinet *bq.Client) error {
 	q := bqClinet.Query(sqlText)
-
+	fmt.Println(sqlText)
 	ctx := context.Background()
 	it, err := q.Read(ctx)
 

@@ -23,3 +23,15 @@ JOIN (
 )
 USING (id)
 ORDER BY pop DESC;
+
+--
+-- movies with highest voting
+WITH Highest_voting As (
+  SELECT movie_id, vote
+  FROM `gomovies.moives_dtls`
+  GROUP BY movie_id,vote
+  HAVING vote = (SELECT MAX(vote) FROM `gomovies.moives_dtls`)
+)
+SELECT name, year, certificate, runtime, rating, `desc`, detls.vote
+FROM `gomovies.moives_dtls` As detls, Highest_voting As v
+WHERE detls.movie_id = v.movie_id;
