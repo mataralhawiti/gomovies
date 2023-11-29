@@ -1,14 +1,11 @@
 package parser
 
-import (
-	"sort"
-	"strconv"
-)
+import "sort"
 
 func GetMoiveNames(movieObj *[]Movie) []string {
 	var names []string
 	for _, movie := range *movieObj {
-		names = append(names, movie.Name)
+		names = append(names, movie.MovieName)
 	}
 	return names
 }
@@ -18,8 +15,8 @@ func GetMoviesByRating(rating int, movieObj *[]Movie) []string {
 	var namesByRating []string
 
 	for _, movie := range *movieObj {
-		if movie.RATING == strconv.Itoa(rating) {
-			namesByRating = append(namesByRating, movie.Name)
+		if movie.Rating == rating {
+			namesByRating = append(namesByRating, movie.MovieName)
 		}
 	}
 	return namesByRating
@@ -30,7 +27,7 @@ func GetMoviesCountByRating(rating int, movieObj *[]Movie) (int, int) {
 	cntMoivesByRating := 0
 
 	for _, movie := range *movieObj {
-		if movie.RATING == strconv.Itoa(rating) {
+		if movie.Rating == rating {
 			cntMoivesByRating = cntMoivesByRating + 1
 		}
 	}
@@ -44,11 +41,11 @@ func GetMoviesCount(movieObj *[]Movie) int {
 
 // GetMoviesRatingStats returns numbers of movies per rating
 // rating range 1 to 10
-func GetMoviesRatingStats(movieObj *[]Movie) map[string]int16 {
-	moviesStats := make(map[string]int16)
+func GetMoviesRatingStats(movieObj *[]Movie) map[int]int {
+	moviesStats := make(map[int]int)
 
 	for _, movie := range *movieObj {
-		moviesStats[movie.RATING] = moviesStats[movie.RATING] + 1
+		moviesStats[movie.Rating] = moviesStats[movie.Rating] + 1
 	}
 
 	return moviesStats
@@ -65,16 +62,17 @@ func GetTop10Movies(movieObj *[]Movie) []string {
 
 	moviebycnt := GetMoviesRatingStats(movieObj)
 
-	keys := make([]string, 0, len(moviebycnt))
+	keys := make([]int, 0, len(moviebycnt))
 	for k := range moviebycnt {
 		keys = append(keys, k)
 	}
 	//sort.Strings(keys)
-	sort.Sort(sort.Reverse(sort.StringSlice(keys)))
+	//sort.Sort(sort.Reverse(sort.StringSlice(keys)))
+	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
 
 	for _, r := range keys {
-		intVar, _ := strconv.Atoi(r)
-		tempSlice := GetMoviesByRating(intVar, movieObj)
+		//intVar, _ := strconv.Atoi(r)
+		tempSlice := GetMoviesByRating(r, movieObj)
 
 		if len(top10Movies) < 10 {
 			top10Movies = append(top10Movies, tempSlice...)

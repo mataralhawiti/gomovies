@@ -1,0 +1,57 @@
+[
+    {
+        "name": "movie_id",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "movie_url",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "name",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "year",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "certificate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "runtime",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "genre",
+        "type": "STRING",
+        "mode": "REPEATED"
+    },
+    {
+        "name": "rating",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "desc",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "poster",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "vote",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    }
+]

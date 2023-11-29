@@ -26,3 +26,50 @@ For rating 9 ---> you have 3 movie
 
 GCP :
 gcloud auth application-default login
+
+# run py from golang
+https://gist.github.com/olegpolukhin/3a4379a400c2c928f2d23059a78f1b82
+
+# 
+/***
+go run .\main.go -fp ".\async_movies_full.json"
+or
+go run .\main.go -fp ".\async_movies_full.json" -st=false
+or
+go run .\main.go -mod 1 -py "C:/x/x/x/x/Programs/Python/Python310/python.exe"
+***/
+
+/home/matar/.config/gcloud/application_default_credentials.json
+
+--
+
+export GCP_PROJECT=golang-389808
+export GCP_DATASET=gomovies
+export GCP_TABLE=moives_dtls
+
+--
+Record !!
+Array (a.k.a. repeated field).
+Struct (a.k.a. nested field).
+
+Normlized -> Denmormalized -> Repeated 
+--
+convert JSON to new line delimited JSON (which is the format that BigQuery ingests)
+cat sync_movies_full.json | jq -c '.[]'
+cat sync_movies_full.json | jq -c '.[]' > sync_movies_full_BQFormatted.json
+
+--
+gcloud storage buckets list | grep gomovies
+gcloud storage cp sync_movies_full_BQFormatted.json gs://gomovies/
+--
+
+--
+go run main.go stats -f "resource/sync_movies_full.json"
+
+go run main.go stats -f="movies.json"
+
+
+./gomovies
+
+--
+https://www.twilio.com/blog/use-cobra-build-go-powered-clis
