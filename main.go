@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mataralhawiti/gomovies/cmd/gomovies"
+	gomovies "github.com/mataralhawiti/gomovies/cmd"
 )
 
 func main() {
