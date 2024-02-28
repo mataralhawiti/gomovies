@@ -10,7 +10,7 @@ import (
 // var filePath string
 var statsCmd = &cobra.Command{
 	Use:   "stats",
-	Short: "show movies stats",
+	Short: "show movies stats fron JSON file",
 	// Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		filePath := cmd.Flags().Lookup("file_path").Value.String() //

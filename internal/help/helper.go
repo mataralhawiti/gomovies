@@ -29,10 +29,10 @@ func contains(slic []string, v string) (bool, error) {
 			return true, nil
 		}
 	}
-	return false, errors.New("Invalid query number")
+	return false, errors.New("invalid query number")
 }
 
-func UserInput() string {
+func UserInput(ds string, tb string) string {
 	// BigQuery
 	ql := bigquery.QueriesList()
 	var ids []string
@@ -58,7 +58,7 @@ func UserInput() string {
 	if ok, err := contains(ids, qur); ok {
 		for _, k := range ql {
 			if sqltxt = k["sqlText"]; k["id"] == qur {
-				return sqltxt
+				return fmt.Sprintf(sqltxt, ds, tb)
 			}
 		}
 	} else {

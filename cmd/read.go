@@ -1,7 +1,6 @@
 package gomovies
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -19,13 +18,12 @@ var readCmd = &cobra.Command{
 		dataSet := os.Getenv("GCP_DATASET")
 		table := os.Getenv("GCP_TABLE")
 
-		// Read from BigQuery
-		sqlTxt := help.UserInput()
-		FmtSqlTxt := fmt.Sprintf(sqlTxt, dataSet, table)
-
-		if projectID == "" {
-			log.Fatal("- GCP_PROJECT environment variable must be set.\n# bash: export GCP_PROJECT=xxx\n# powershell: $env:GCP_PROJECT=xxx")
+		if projectID == "" || dataSet == "" || table == "" {
+			log.Fatal("Please make sure all env variables are set for GCP (GCP_PROJECT, GCP_DATASET, GCP_TABLE)")
 		}
+
+		// Read from BigQuery
+		FmtSqlTxt := help.UserInput(dataSet, table)
 		c := bigquery.CreateBqClient(projectID)
 		bigquery.ReadFromBq(FmtSqlTxt, c)
 	},
