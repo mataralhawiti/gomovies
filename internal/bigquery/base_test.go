@@ -11,9 +11,9 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-const BigQuery string = "BigQuery"
+const TestBigQuery string = "BigQuery"
 
-func CreateBqClient(projectID string) *bq.Client {
+func TestCreateBqClient(projectID string) *bq.Client {
 	ctx := context.Background()
 
 	// Creates a client.
@@ -26,7 +26,7 @@ func CreateBqClient(projectID string) *bq.Client {
 	return client
 }
 
-func CreateDataSet(datasetName string, bqClinet *bq.Client) {
+func TestCreateDataSet(datasetName string, bqClinet *bq.Client) {
 	ctx := context.Background()
 	if err := bqClinet.Dataset(datasetName).Create(ctx, &bq.DatasetMetadata{}); err != nil {
 		log.Fatalf("Failed to create dataset: %v", err)
@@ -34,7 +34,7 @@ func CreateDataSet(datasetName string, bqClinet *bq.Client) {
 	fmt.Printf("Dataset created\n")
 }
 
-func CreateTable(datasetName string, tableName string, bqClinet *bq.Client) {
+func TestCreateTable(datasetName string, tableName string, bqClinet *bq.Client) {
 	schema, err := bq.InferSchema(parser.Movie{})
 	if err != nil {
 		log.Fatalf("Failed to create dataset: %v", err)
@@ -47,7 +47,7 @@ func CreateTable(datasetName string, tableName string, bqClinet *bq.Client) {
 	}
 }
 
-func InsertIntoBq(datasetName string, tableName string, bqClinet *bq.Client, mvs []parser.Movie) error {
+func TestInsertIntoBq(datasetName string, tableName string, bqClinet *bq.Client, mvs []parser.Movie) error {
 	ins := bqClinet.Dataset(datasetName).Table(tableName).Inserter()
 
 	ctx := context.Background()
@@ -58,7 +58,7 @@ func InsertIntoBq(datasetName string, tableName string, bqClinet *bq.Client, mvs
 	return nil
 }
 
-func ReadFromBq(sqlText string, bqClinet *bq.Client) error {
+func TestReadFromBq(sqlText string, bqClinet *bq.Client) error {
 	q := bqClinet.Query(sqlText)
 	fmt.Println(sqlText)
 	ctx := context.Background()
@@ -83,7 +83,7 @@ func ReadFromBq(sqlText string, bqClinet *bq.Client) error {
 	return nil
 }
 
-func ReadFromBqDryRun(sqlText string, bqClinet *bq.Client) error {
+func TestReadFromBqDryRun(sqlText string, bqClinet *bq.Client) error {
 	ctx := context.Background()
 
 	q := bqClinet.Query(sqlText)
